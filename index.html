@@ -3,136 +3,358 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZRPT | City of Harare Housing</title>
+    <title>ZRPT | Zimbabwe Royal Projects Trust</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            overflow: hidden;
+        :root {
+            --brand-primary: #1e293b; /* Deep slate for a sophisticated look */
+            --brand-accent: #3b82f6;  /* Vivid blue used sparingly */
+            --bg-light: #fcfcfd;
+            --text-heading: #0f172a;
+            --text-body: #475569;
+            --glass-blur: blur(20px);
         }
 
-        /* Background Slideshow Container */
-        .slideshow-container {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            background-color: #000;
+        body, html { 
+            margin: 0; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            scroll-behavior: smooth;
+            background-color: var(--bg-light);
+            color: var(--text-body);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
-        .slide {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0;
-            animation: fadeAnimation 30s infinite; /* 3 images * 10s = 30s total cycle */
-        }
-
-        /* Define your images here */
-        .slide:nth-child(1) {
-            background-image: url('https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&q=80&w=1600');
-            animation-delay: 0s;
-        }
-        .slide:nth-child(2) {
-            background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=1600');
-            animation-delay: 10s;
-        }
-        .slide:nth-child(3) {
-            background-image: url('https://images.unsplash.com/photo-1448630360428-65456885c650?auto=format&fit=crop&q=80&w=1600');
-            animation-delay: 20s;
-        }
-
-        @keyframes fadeAnimation {
-            0% { opacity: 0; }
-            5% { opacity: 1; }
-            33% { opacity: 1; }
-            38% { opacity: 0; }
-            100% { opacity: 0; }
-        }
-
-        /* Modern Overlay & Content Styling */
-        .hero-overlay {
+        /* --- Minimalist Hero --- */
+        .hero-section {
             height: 100vh;
-            background: rgba(0, 0, 0, 0.5); /* Darkens images for text clarity */
+            width: 100%;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
+            background-color: #000;
+        }
+
+        .slideshow-container { position: absolute; inset: 0; z-index: 1; }
+        
+        .slide { 
+            position: absolute; 
+            inset: 0;
+            background-size: cover; 
+            background-position: center; 
+            opacity: 0; 
+            filter: brightness(0.5);
+            transform: scale(1.05);
+            animation: kenBurns 24s infinite linear; 
+        }
+
+        .slide:nth-child(1) { background-image: url('https://images.unsplash.com/photo-1582407947304-fd86f028f716?q=80&w=1600'); animation-delay: 0s; }
+        .slide:nth-child(2) { background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1600'); animation-delay: 8s; }
+        .slide:nth-child(3) { background-image: url('https://images.unsplash.com/photo-1448630360428-65456885c650?q=80&w=1600'); animation-delay: 16s; }
+        
+        @keyframes kenBurns { 
+            0% { opacity: 0; transform: scale(1); } 
+            8% { opacity: 1; } 
+            33% { opacity: 1; transform: scale(1.1); } 
+            40% { opacity: 0; } 
+            100% { opacity: 0; } 
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+            z-index: 2;
+        }
+
+        /* --- Premium Glass Card --- */
+        .glass-card { 
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: var(--glass-blur); 
+            -webkit-backdrop-filter: var(--glass-blur); 
+            border: 1px solid rgba(255, 255, 255, 0.12); 
+            padding: 4.5rem 3.5rem; 
+            border-radius: 40px; 
+            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.4); 
+            max-width: 800px; 
+            color: white;
             text-align: center;
-            color: white;
-            padding: 20px;
+            margin: 0 20px;
         }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.1);
+        .hero-title { font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1.5rem; }
+        .hero-subtitle { font-weight: 300; opacity: 0.85; font-size: 1.25rem; margin-bottom: 2.5rem; }
+
+        /* --- Navigation --- */
+        .navbar {
+            background: transparent;
+            padding: 1.5rem 0;
+            transition: all 0.4s ease;
+        }
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95) !important;
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            max-width: 700px;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f1f5f9;
         }
+        .navbar-brand { font-weight: 800; letter-spacing: -1px; color: white; transition: 0.3s; }
+        .scrolled .navbar-brand { color: var(--text-heading); }
 
-        h1 {
-            font-weight: 800;
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-        }
-
-        p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 2rem;
-        }
-
-        .btn-modern {
-            padding: 12px 40px;
+        /* --- Interactive Buttons --- */
+        .btn-premium {
+            padding: 18px 42px;
             font-weight: 700;
-            border-radius: 50px;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background-color: #0d6efd;
+            border-radius: 100px;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
             border: none;
-            color: white;
-            text-decoration: none;
+            position: relative;
+            overflow: hidden;
         }
+        .btn-main { background: #ffffff; color: #000; }
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255,255,255,0.2); background: var(--brand-accent); color: white; }
 
-        .btn-modern:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(13, 110, 253, 0.4);
-            background-color: #0b5ed7;
-            color: white;
+        /* --- Content Blocks --- */
+        section { padding: 140px 0; }
+        .section-tag { color: var(--brand-accent); font-weight: 700; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; display: block; margin-bottom: 1rem; }
+        .section-title { color: var(--text-heading); font-weight: 800; font-size: 2.5rem; letter-spacing: -0.02em; }
+
+        .service-card {
+            background: #ffffff;
+            padding: 50px 40px;
+            border-radius: 32px;
+            border: 1px solid #f1f5f9;
+            transition: 0.5s;
         }
+        .service-card:hover { transform: translateY(-12px); border-color: #e2e8f0; box-shadow: 0 40px 80px -20px rgba(0,0,0,0.06); }
+        .service-icon { color: var(--brand-accent); font-size: 2.5rem; margin-bottom: 1.5rem; opacity: 0.9; }
+
+        /* --- Contact List --- */
+        .contact-card {
+            background: #ffffff;
+            border: 1px solid #f1f5f9;
+            border-radius: 24px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: 0.3s;
+        }
+        .contact-card:hover { background: #f8fafc; }
+        .contact-icon { width: 48px; height: 48px; border-radius: 14px; background: #eff6ff; color: var(--brand-accent); display: flex; align-items: center; justify-content: center; }
+
+        /* --- WhatsApp --- */
+        .whatsapp-float {
+            position: fixed; bottom: 40px; right: 40px;
+            background: #000; color: white;
+            width: 60px; height: 60px; border-radius: 20px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; z-index: 1000;
+            transition: 0.4s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .whatsapp-float:hover { background: #25d366; transform: scale(1.1) rotate(10deg); }
+
+        .reveal { opacity: 0; transform: translateY(25px); transition: 1s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
     </style>
 </head>
 <body>
 
-    <div class="slideshow-container">
-        <div class="slide"></div>
-        <div class="slide"></div>
-        <div class="slide"></div>
-    </div>
+    <a href="https://wa.me/263780464210" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
-    <div class="hero-overlay">
-        <div class="glass-card">
-            <h1 class="display-4">ZIMBABWE ROYAL PROJECTS TRUST</h1>
-            <p>Empowering the community through sustainable housing solutions in the City of Harare.</p>
-            <hr class="my-4 border-light opacity-25">
-            <a href="registration.html" class="btn btn-modern">Start Registration Form</a>
+    <div id="successAlert" class="position-fixed top-0 start-50 translate-middle-x mt-4" style="display:none; z-index: 11000;">
+        <div class="alert alert-white shadow-lg p-4 d-flex align-items-center" role="alert" style="border-radius: 24px; border: 1px solid #f1f5f9;">
+            <i class="fas fa-check-circle text-success fs-3 me-3"></i>
+            <div>
+                <strong class="d-block text-dark">Verified</strong>
+                <span class="small text-muted">Registration details updated successfully.</span>
+            </div>
+            <button type="button" class="btn-close ms-4" onclick="document.getElementById('successAlert').style.display='none'"></button>
         </div>
     </div>
 
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#">ZRPT<span style="color:var(--brand-accent)">.</span></a>
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center gap-2">
+                    <li class="nav-item"><a class="nav-link text-white small fw-bold px-3" href="#home" id="link1">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link text-white small fw-bold px-3" href="#services" id="link2">SERVICES</a></li>
+                    <li class="nav-item"><a class="nav-link text-white small fw-bold px-3" href="#contact" id="link3">CONTACT</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <button class="btn btn-premium btn-main px-4 py-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            PORTAL LOGIN
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero-section" id="home">
+        <div class="slideshow-container">
+            <div class="slide"></div>
+            <div class="slide"></div>
+            <div class="slide"></div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="glass-card reveal active">
+            <h1 class="hero-title display-3">ZIMBABWE ROYAL PROJECTS TRUST</h1>
+            <p class="hero-subtitle">Engineering sustainable residential solutions for the future of Zimbabwe.</p>
+            <a href="registration.html" class="btn btn-premium btn-main">BEGIN REGISTRATION</a>
+        </div>
+    </div>
+
+    <section id="services">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-lg-6 reveal">
+                    <span class="section-tag">Trust Services</span>
+                    <h2 class="section-title">Institutional Grade Housing Solutions</h2>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4 reveal">
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-layer-group"></i></div>
+                        <h5 class="fw-bold text-dark">Urban Planning</h5>
+                        <p class="small text-muted mb-0">High-fidelity land development strategies strictly adhering to Zimbabwe regulatory frameworks.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 reveal">
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-shield-check"></i></div>
+                        <h5 class="fw-bold text-dark">Asset Security</h5>
+                        <p class="small text-muted mb-0">End-to-end legal transparency and title security for all trust participants and stakeholders.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 reveal">
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-leaf"></i></div>
+                        <h5 class="fw-bold text-dark">Community Impact</h5>
+                        <p class="small text-muted mb-0">Creating living environments that integrate green energy and modern infrastructure.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="background: #f8fafc;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5 reveal">
+                    <span class="section-tag">Communication</span>
+                    <h2 class="section-title mb-4">Official Channels</h2>
+                    <p class="text-muted mb-5">Our administrative offices are open Monday to Friday for trust-related inquiries and verified consultations.</p>
+                    
+                    <div class="d-grid gap-3">
+                        <div class="contact-card">
+                            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div><h6 class="fw-bold mb-0 text-dark">Regional Office</h6><small>Zimbabwe CBD Headquarters</small></div>
+                        </div>
+                        <div class="contact-card">
+                            <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                            <div><h6 class="fw-bold mb-0 text-dark">Trust Helpline</h6><small>+263 77 609 2761</small></div>
+                        </div>
+                        <div class="contact-card">
+                            <div class="contact-icon"><i class="fas fa-envelope-open"></i></div>
+                            <div><h6 class="fw-bold mb-0 text-dark">Digital Support</h6><small>info@zrpt.co.zw</small></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 offset-lg-1 reveal">
+                    <div class="bg-white p-2 rounded-5 shadow-sm border">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000" class="img-fluid rounded-5" alt="Modern Architecture">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white py-5 border-top">
+        <div class="container text-center">
+            <h5 class="fw-800 text-dark mb-4">ZRPT<span class="text-primary">.</span></h5>
+            <p class="small text-muted mb-4">Official Registered Trust for Zimbabwe Sustainable Housing Projects.</p>
+            <div class="d-flex justify-content-center gap-3 mb-4">
+                <a href="#" class="text-muted"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-muted"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="text-muted"><i class="fab fa-twitter"></i></a>
+            </div>
+            <p class="small opacity-50 mb-0">© 2025 Zimbabwe Royal Projects Trust.</p>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content overflow-hidden border-0" style="border-radius: 40px; box-shadow: 0 50px 100px rgba(0,0,0,0.15);">
+                <div class="modal-header bg-dark text-white p-4 border-0">
+                    <h5 class="modal-title fw-bold">Member Access</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-5">
+                    <form action="login.php" method="POST">
+                        <div class="mb-4">
+                            <label class="form-label small fw-bold text-muted">ACCOUNT REFERENCE</label>
+                            <input type="text" name="tracking_code" class="form-control form-control-lg border-0 bg-light rounded-4 px-4" placeholder="Z00..." required>
+                        </div>
+                        <div class="mb-5">
+                            <label class="form-label small fw-bold text-muted">ID NUMBER</label>
+                            <input type="text" name="app_id" class="form-control form-control-lg border-0 bg-light rounded-4 px-4" placeholder="00-000000X00" required>
+                        </div>
+                        <button type="submit" class="btn btn-dark w-100 py-3 fw-bold rounded-pill">ACCESS PROFILE</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth Nav and Reveal
+        window.addEventListener("scroll", function() {
+            var nav = document.getElementById("mainNav");
+            var links = [document.getElementById("link1"), document.getElementById("link2"), document.getElementById("link3")];
+            if (window.scrollY > 50) {
+                nav.classList.add("scrolled");
+                links.forEach(l => { l.classList.remove("text-white"); l.classList.add("text-dark"); });
+            } else {
+                nav.classList.remove("scrolled");
+                links.forEach(l => { l.classList.add("text-white"); l.classList.remove("text-dark"); });
+            }
+
+            var reveals = document.querySelectorAll(".reveal");
+            reveals.forEach(r => {
+                var windowHeight = window.innerHeight;
+                var elementTop = r.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) r.classList.add("active");
+            });
+        });
+
+        // Restore Success Script
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('status') === 'success') {
+                const alertBox = document.getElementById('successAlert');
+                alertBox.style.display = 'block';
+                setTimeout(() => { alertBox.style.display = 'none'; }, 6000);
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        };
+    </script>
 </body>
 </html>
